@@ -1,0 +1,31 @@
+PODS:
+  - Alamofire (4.5.1)
+  - Cria (1.0.0):
+    - Alamofire (~> 4.5.1)
+    - Cria/Core (= 1.0.0)
+    - Oath
+  - Cria/Core (1.0.0):
+    - Alamofire (~> 4.5.1)
+    - Oath
+  - Oath (1.0.1)
+
+DEPENDENCIES:
+  - Cria (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Oath
+
+EXTERNAL SOURCES:
+  Cria:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  Cria: ae01f3d20465a792f8e6dc8e3c135375d813d9be
+  Oath: 91ac07a90aea383dd7e4bb03f51851bb508da08d
+
+PODFILE CHECKSUM: 2e0a706030e17275878cbd1de136a0c1b02e116f
+
+COCOAPODS: 1.5.2

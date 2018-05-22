@@ -1,0 +1,145 @@
+:name: Cria
+:author: Elias Abel
+:author_esc: Elias%20Abel
+:mail: admin@meniny.cn
+:desc: an elegant HTTP requests framework for Swift. (Alamofire + Promise) ☁️
+:icon: {name}.png
+:version: 1.0.0
+:na: N/A
+:ios: 8.0
+:macos: 10.10
+:watchos: 2.0
+:tvos: 9.0
+:linux: {na}
+:xcode: 9.3
+:swift: 4.1
+:license: MIT
+:sep: %20%7C%20
+:platform: iOS{sep}macOS{sep}watchOS{sep}tvOS
+// :toc: left
+:toclevels: 6
+:toc-title: TOC
+:source-highlighter: highlightjs
+// :source-highlighter: pygments
+= Meet `{name}`
+{author} <{mail}>
+v{version}, 2018-05-22
+
+[subs="attributes"]
+++++
+<p align="center">
+  <img src="./Assets/{icon}" alt="{name}" width="200px">
+  <br/><br/>
+  <img alt="Author" src="https://img.shields.io/badge/author-{author_esc}-blue.svg">
+  <img alt="EMail" src="https://img.shields.io/badge/mail-{mail}-orange.svg">
+  <img alt="MIT" src="https://img.shields.io/badge/license-{license}-blue.svg">
+  <br/>
+  <img alt="Version" src="https://img.shields.io/badge/version-{version}-brightgreen.svg">
+  <img alt="Platforms" src="https://img.shields.io/badge/platform-{platform}-lightgrey.svg">
+  <img alt="Swift" src="https://img.shields.io/badge/swift-{swift}%2B-orange.svg">
+  <br/>
+  <img alt="Build Passing" src="https://img.shields.io/badge/build-passing-brightgreen.svg">
+  <img alt="Cocoapods" src="https://img.shields.io/badge/cocoapods-compatible-brightgreen.svg">
+  <img alt="Carthage" src="https://img.shields.io/badge/carthage-compatible-brightgreen.svg">
+  <img alt="SPM" src="https://img.shields.io/badge/spm-compatible-brightgreen.svg">
+</p>
+++++
+
+:toc:
+
+== 🏵 Introduction
+
+**{name}** is {desc}.
+
+NOTE: `Cria` means a juvenile alpaca, also commonly known as `草泥马` in Mandarin Chinese.
+
+== 📋 Requirements
+
+[%header]
+|===
+2+^m|Type 1+^m|Requirement
+
+1.5+^.^|Platform ^|iOS ^|{ios}
+^|macOS ^|{macos}
+^|tvOS ^|{tvos}
+^|watchOS ^|{watchos}
+^|Linux ^|{linux}
+
+^|IDE ^|Xcode ^| {xcode}
+^|Language ^|Swift ^| {swift}
+|===
+
+== 📲 Installation
+
+=== CocoaPods
+
+`{name}` is available on link:https://cocoapods.org[CocoaPods].
+
+[source, ruby, subs="verbatim,attributes"]
+----
+use_frameworks!
+pod '{name}'
+----
+
+=== Manually
+
+Copy all files in the `{name}` directory into your project.
+
+== 🛌 Dependency
+
+* link:https://github.com/Meniny/Oath[Oath]
+* link:https://github.com/Alamofire/Alamofire[Alamofire]
+
+== ❤️ Contribution
+
+You are welcome to fork and submit pull requests.
+
+== 🔖 License
+
+`{name}` is open-sourced software, licensed under the link:./LICENSE.md[`{license}`] license.
+
+== 🔫 Usage
+
+[source, swift, subs="verbatim,attributes"]
+----
+import {name}
+import Oath
+
+let cria = Cria.init("https://meniny.cn/api/v2/")
+
+// A simple get request:
+cria.get("posts.json").then { response in
+        print("Done: ", response.code)
+    }.onError { error in
+        print("Error: ", error.localizedDescription)
+}
+
+// or:
+cria.do(.get, path: "posts.json").then { response in
+        print("Done: ", response.code)
+    }.onError { error in
+        print("Error: ", error.localizedDescription)
+}
+----
+
+For `multipart-form`:
+
+[source, swift, subs="verbatim,attributes"]
+----
+import {name}
+import Oath
+
+let cria = Cria.init("https://some-domain.com/")
+
+let image = #imageLiteral(resourceName: "Cria")
+if let data = UIImageJPEGRepresentation(image, 1) {
+    let part = CriaFormPart.init(.data(data), name: "image", mimetype: "image/jpeg")
+    cria.postMultipart("some_uploading_api/subpath/", data: [part]).progress { p in
+        print("Progress: ", p)
+        }.then { response in
+            print("Done: ", response.code)
+        }.onError { error in
+            print("Error: ", error.localizedDescription)
+    }
+}
+----
