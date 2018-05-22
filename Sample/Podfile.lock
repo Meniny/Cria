@@ -1,11 +1,11 @@
 PODS:
-  - Alamofire (4.5.1)
+  - Alamofire (4.7.2)
   - Cria (1.0.0):
-    - Alamofire (~> 4.5.1)
+    - Alamofire (~> 4.7)
     - Cria/Core (= 1.0.0)
     - Oath
   - Cria/Core (1.0.0):
-    - Alamofire (~> 4.5.1)
+    - Alamofire (~> 4.7)
     - Oath
   - Oath (1.0.1)
 
@@ -22,8 +22,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
-  Cria: ae01f3d20465a792f8e6dc8e3c135375d813d9be
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Cria: e236f597c9ab2c71ec57c303a860b43e7788598c
   Oath: 91ac07a90aea383dd7e4bb03f51851bb508da08d
 
 PODFILE CHECKSUM: 2e0a706030e17275878cbd1de136a0c1b02e116f

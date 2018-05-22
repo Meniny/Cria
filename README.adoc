@@ -2,20 +2,20 @@
 :author: Elias Abel
 :author_esc: Elias%20Abel
 :mail: admin@meniny.cn
-:desc: an elegant HTTP requests framework for Swift. (Alamofire + Promise) ☁️
+:desc: an elegant HTTP requests framework for Swift with ❤️ and Alamofire + Promise ☁️
 :icon: {name}.png
 :version: 1.0.0
 :na: N/A
 :ios: 8.0
 :macos: 10.10
-:watchos: 2.0
+:watchos: {na}
 :tvos: 9.0
 :linux: {na}
 :xcode: 9.3
 :swift: 4.1
 :license: MIT
 :sep: %20%7C%20
-:platform: iOS{sep}macOS{sep}watchOS{sep}tvOS
+:platform: iOS{sep}macOS{sep}tvOS
 // :toc: left
 :toclevels: 6
 :toc-title: TOC
