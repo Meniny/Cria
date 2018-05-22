@@ -28,8 +28,9 @@ public extension Cria {
             set { logger.logLevels = newValue }
         }
         open var postParameterEncoding: ParameterEncoding = URLEncoding()
+        #if os(iOS)
         open var showsNetworkActivityIndicator = true
-        //    open var errorHandler: ((Jsonify) -> Error?)?
+        #endif
         
         private let logger = Cria.Logger()
         
@@ -65,9 +66,11 @@ public extension Cria {
         open func fetch() -> Promise<Cria.Response> {
             return Promise<Cria.Response> { resolve, reject, progress in
                 DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                    #if os(iOS)
                     if self.showsNetworkActivityIndicator {
                         Cria.NetworkIndicator.shared.startRequest()
                     }
+                    #endif
                     if self.isMultipart {
                         self.sendMultipartRequest(resolve, reject: reject, progress: progress)
                     } else {
@@ -147,7 +150,9 @@ public extension Cria {
         }
         
         func handleResponse(_ response: DefaultDataResponse, resolve: @escaping (Cria.Response) -> Void, reject: @escaping (Error) -> Void) {
+            #if os(iOS)
             Cria.NetworkIndicator.shared.stopRequest()
+            #endif
             
             self.logger.logResponse(response)
             

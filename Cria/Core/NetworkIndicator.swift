@@ -6,7 +6,9 @@
 //  Copyright © 2016 Meniny Lab. All rights reserved.
 //
 
+#if os(iOS)
 import Foundation
+import UIKit
 
 public extension Cria {
     /**
@@ -47,3 +49,4 @@ public extension Cria {
 }
 
 public typealias CriaNetworkIndicator = Cria.NetworkIndicator
+#endif

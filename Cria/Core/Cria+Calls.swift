@@ -23,8 +23,10 @@ public extension Cria {
         r.baseURL = baseURL
         r.logLevels = logLevels
         r.postParameterEncoding = postParameterEncoding
-        r.showsNetworkActivityIndicator = showsNetworkActivityIndicator
         r.headers = headers
+        #if os(iOS)
+        r.showsNetworkActivityIndicator = showsNetworkActivityIndicator
+        #endif
         return r
     }
     

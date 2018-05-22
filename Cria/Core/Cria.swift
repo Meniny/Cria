@@ -32,11 +32,13 @@ open class Cria {
     open var logLevels = Cria.Logger.Level.off
     open var postParameterEncoding: ParameterEncoding = URLEncoding()
     
+    #if os(iOS)
     /**
         Displays network activity indicator at the top left hand corner of the iPhone's screen in the status bar.
         Is shown by dafeult, set it to false to hide it.
      */
     open var showsNetworkActivityIndicator = true
+    #endif
     
     open var baseURL: String
     open var headers: [String: String]
