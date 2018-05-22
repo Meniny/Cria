@@ -4,7 +4,7 @@
 :mail: admin@meniny.cn
 :desc: an elegant HTTP requests framework for Swift with ❤️ and Alamofire + Promise ☁️
 :icon: {name}.png
-:version: 1.0.0
+:version: 1.0.1
 :na: N/A
 :ios: 8.0
 :macos: 10.10

@@ -15,6 +15,8 @@ public extension Cria {
         
         open var isMultipart: Bool = false
         open var multipartData: [Cria.FormPart] = []
+        open var uploadData: Data?
+        open var downloadDestination: URL?
         
         open var baseURL = ""
         open var path = ""
@@ -62,7 +64,7 @@ public extension Cria {
             return request ?? r
         }
         
-        /// Returns Promise containing response status code, headers and parsed Jsonify
+        /// Returns Promise containing response status code, headers and data
         open func fetch() -> Promise<Cria.Response> {
             return Promise<Cria.Response> { resolve, reject, progress in
                 DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
@@ -80,10 +82,66 @@ public extension Cria {
             }
         }
         
+        open func upload() -> Promise<Cria.Response> {
+            return Promise<Cria.Response> { resolve, reject, progress in
+                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                    #if os(iOS)
+                    if self.showsNetworkActivityIndicator {
+                        Cria.NetworkIndicator.shared.startRequest()
+                    }
+                    #endif
+                    self.sendDataUploadRequest(resolve, reject: reject, progress: progress)
+                }
+            }
+        }
+        
+        open func download() -> Promise<Cria.DownloadResponse> {
+            return Promise<Cria.DownloadResponse> { resolve, reject, progress in
+                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                    #if os(iOS)
+                    if self.showsNetworkActivityIndicator {
+                        Cria.NetworkIndicator.shared.startRequest()
+                    }
+                    #endif
+                    self.sendDownloadRequest(resolve, reject: reject, progress: progress)
+                }
+            }
+        }
+        
+        func sendDownloadRequest(_ resolve: @escaping (Cria.DownloadResponse) -> Void,
+                                 reject: @escaping (_ error: Error) -> Void,
+                                 progress:@escaping (Float) -> Void) {
+            guard let dest = self.downloadDestination else {
+                fatalError("No download destination URL setted")
+            }
+            let r: DownloadRequest = SessionManager.default.download(self.fullURL, method: self.method.alamofireMethod, parameters: self.params, encoding: URLEncoding(), headers: self.headers, to: { (_, _) -> (URL, DownloadRequest.DownloadOptions) in
+                return (dest, [DownloadRequest.DownloadOptions.removePreviousFile, DownloadRequest.DownloadOptions.createIntermediateDirectories])
+            })
+            r.downloadProgress(queue: .main) { (p) in
+                progress(Float(p.fractionCompleted))
+                }.validate().response { (response) in
+                    self.handleDownloadResponse(response, resolve: resolve, reject: reject)
+            }
+        }
+        
+        func sendDataUploadRequest(_ resolve: @escaping (Cria.Response) -> Void,
+                               reject: @escaping (_ error: Error) -> Void,
+                               progress:@escaping (Float) -> Void) {
+            guard let data = self.uploadData else {
+                fatalError("No upload data setted")
+            }
+            let r: UploadRequest = SessionManager.default.upload(data, to: self.fullURL, method: self.method.alamofireMethod, headers: self.headers)
+            r.uploadProgress(queue: .main) { (p) in
+                progress(Float(p.fractionCompleted))
+                }.validate().response { (response) in
+                    self.handleResponse(response, resolve: resolve, reject: reject)
+            }
+        }
+        
         func sendMultipartRequest(_ resolve: @escaping (Cria.Response) -> Void,
                                   reject: @escaping (_ error: Error) -> Void,
                                   progress:@escaping (Float) -> Void) {
-            upload(multipartFormData: { formData in
+            SessionManager.default.upload(multipartFormData: { formData in
                 for (key, value) in self.params {
                     let str: String
                     switch value {
@@ -164,7 +222,24 @@ public extension Cria {
                     return
                 }
                 let header = response.response?.allHeaderFields ?? [:]
-                resolve(Cria.Response.init(code: code, headerFields: header, data: data))
+                resolve(Cria.Response.init(data: data, code: code, header: header))
+            } else {
+                reject(response.error ?? CriaError.init(httpStatusCode: code))
+            }
+        }
+        
+        func handleDownloadResponse(_ response: DefaultDownloadResponse, resolve: @escaping (Cria.DownloadResponse) -> Void, reject: @escaping (Error) -> Void) {
+            #if os(iOS)
+            Cria.NetworkIndicator.shared.stopRequest()
+            #endif
+            
+            self.logger.logDownloadResponse(response)
+            
+            let code = response.response?.statusCode ?? 0
+            
+            if response.error == nil {
+                let header = response.response?.allHeaderFields ?? [:]
+                resolve(Cria.DownloadResponse.init(code: code, header: header, temporary: response.temporaryURL, destination: response.destinationURL))
             } else {
                 reject(response.error ?? CriaError.init(httpStatusCode: code))
             }

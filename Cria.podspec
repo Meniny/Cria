@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name        = 'Cria'
   s.module_name = 'Cria'
-  s.version     = '1.0.0'
+  s.version     = '1.0.1'
   s.summary     = 'Cria is an elegant HTTP requests framework for Swift with ❤️ and Alamofire + Promise ☁️.'
 
   s.homepage    = 'https://github.com/Meniny/Cria'

@@ -1,10 +1,10 @@
 PODS:
   - Alamofire (4.7.2)
-  - Cria (1.0.0):
+  - Cria (1.0.1):
     - Alamofire (~> 4.7)
-    - Cria/Core (= 1.0.0)
+    - Cria/Core (= 1.0.1)
     - Oath
-  - Cria/Core (1.0.0):
+  - Cria/Core (1.0.1):
     - Alamofire (~> 4.7)
     - Oath
   - Oath (1.0.1)
@@ -23,7 +23,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  Cria: e236f597c9ab2c71ec57c303a860b43e7788598c
+  Cria: 6179073bacf375d47d1c993b54699fd3819b4cb6
   Oath: 91ac07a90aea383dd7e4bb03f51851bb508da08d
 
 PODFILE CHECKSUM: 2e0a706030e17275878cbd1de136a0c1b02e116f

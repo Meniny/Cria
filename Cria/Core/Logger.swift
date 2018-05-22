@@ -72,6 +72,16 @@ public extension Cria {
             //        }
         }
         
+        open func logDownloadResponse(_ response: DefaultDownloadResponse) {
+            guard logLevels != .off else {
+                return
+            }
+            logStatusCodeAndURL(response.response)
+            //        if logLevels == .debug {
+            //            print()
+            //        }
+        }
+        
         open func logResponse(_ response: DataResponse<Any>) {
             guard logLevels != .off else {
                 return
