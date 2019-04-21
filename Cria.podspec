@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name        = 'Cria'
   s.module_name = 'Cria'
-  s.version     = '1.0.1'
+  s.version     = '1.1.0'
   s.summary     = 'Cria is an elegant HTTP requests framework for Swift with ❤️ and Alamofire + Promise ☁️.'
 
   s.homepage    = 'https://github.com/Meniny/Cria'
@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   s.requires_arc        = true
   s.source              = { git: 'https://github.com/Meniny/Cria.git', tag: s.version.to_s }
 
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.1' }
-  s.swift_version       = '4.1'
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5' }
+  s.swift_version       = '5'
 
   s.dependency 'Oath'
   s.dependency 'Alamofire', '~> 4.7'

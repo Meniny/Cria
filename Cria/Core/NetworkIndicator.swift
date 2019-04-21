@@ -20,21 +20,21 @@ public extension Cria {
      */
     open class NetworkIndicator: NSObject {
         
-        open static let shared = Cria.NetworkIndicator()
+        public static let shared = Cria.NetworkIndicator()
         private var runningRequests = 0
         
         open func startRequest() {
             runningRequests += 1
             // For some unowned reason using scheduledTimer does not work in this case.
             let timer = Timer(timeInterval: 1, target: self, selector: #selector(tick), userInfo: nil, repeats: false)
-            RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+            RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
         }
         
         open func stopRequest() {
             runningRequests -= 1
             // For some unowned reason using scheduledTimer does not work in this case.
             let timer = Timer(timeInterval: 0.2, target: self, selector: #selector(tick), userInfo: nil, repeats: false)
-            RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+            RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
         }
         
         @objc

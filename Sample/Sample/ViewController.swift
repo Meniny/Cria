@@ -54,7 +54,7 @@ class ViewController: UIViewController {
     
     func form() {
         let image = #imageLiteral(resourceName: "Cria")
-        if let data = UIImageJPEGRepresentation(image, 1) {
+        if let data = image.jpegData(compressionQuality: 1) {
             let part = CriaFormPart.init(.data(data), name: "image", mimetype: "image/jpeg")
             cria.postMultipart("some_uploading_api/subpath/", data: [part]).progress { p in
                 self.join("Progress: ", p)
